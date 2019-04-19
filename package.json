@@ -1,0 +1,37 @@
+{
+  "name": "@clearvox/callcontrol",
+  "description": "Realtime client for ClearVox Call Control",
+  "authors": [
+    {
+      "name": "Stijn Buurman",
+      "email": "stijnbuurman@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "1.6.0",
+  "public": true,
+  "main": "./dist/clearvox-realtime.umd.js",
+  "types": "./dist/types/index.d.ts",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "socket.io-client": "1.7.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.0",
+    "@types/socket.io-client": "^1.4.32",
+    "@types/uuid": "^3.4.3",
+    "@types/whatwg-url": "^6.4.0",
+    "ts-loader": "^4.1.0",
+    "typescript": "^3.3.3333",
+    "webpack": "4.8.3",
+    "webpack-cli": "2.1.4",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "scripts": {
+    "watch:dev": "webpack --config webpack.dev.config.js --watch",
+    "build:dev": "webpack --config webpack.dev.config.js",
+    "watch:prod": "webpack --config webpack.prod.config.js --watch",
+    "build:prod": "webpack --config webpack.prod.config.js"
+  }
+}

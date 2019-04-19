@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.4/socket.io.min.js" integrity="sha256-WKvqiY0jZHWQZIohYEmr9KUC5rEaYEOFTq+ByllJK8w=" crossorigin="anonymous"></script>
+    <script src="../../dist/clearvox-callcontrol.web.min.js"></script>
+
+    <script>
+        const url = 'https://192.168.1.1';
+        const apiKey = '';
+
+        CallControl.connect(url, apiKey).then((callControl) => {
+            callControl.onChannelStart((channel) => {
+                console.log('channel started', channel);
+
+                channel.onUpdate((channel) => {
+                    console.log('channel updated the state is: ' + CallControl.ChannelState[channel.state], channel);
+                });
+
+                channel.onEnd((channel) => {
+                    console.log('call ended', channel);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
