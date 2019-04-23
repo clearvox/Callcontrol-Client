@@ -5,7 +5,7 @@ export class MakeCallAction extends Action {
         super('makeCall', {
             number: number,
             phone: phone,
-            auto_answer: autoAnswer,
+            auto_answer: autoAnswer === undefined ? Number(autoAnswer) : -1,
             call_reference: callReference,
         });
     }
