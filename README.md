@@ -191,11 +191,16 @@ Channel Schema
 
 ```typescript
 {
-    callID: string,
-    channelID: string,
-    phoneID: string,
+    getCallID(): string;
+    getChannelID(): string;
+    getPhoneID(): string;
+    
+    onUpdate(callback: (channel: Channel) => void);
+    onEnd(callback: (channel: Channel) => void);
+    onError(callback: (error: CallControlError) => void);
+    
     answered: boolean,
-    originate: boolean, dial
+    originate: boolean,
     origins: CallOrigin[],
     number: string, // the number of the other side of the call
     name: string, // the name of the other side of the call
@@ -205,12 +210,6 @@ Channel Schema
     duration: number,
     otherTransferCallID: string, // if this is set, the call is part of an attended transfer
     isRecording: string,
-    
-    onUpdate(callback: (channel: Channel) => void);
-    
-    onEnd(callback: (channel: Channel) => void);
-    
-    onError(callback: (error: CallControlError) => void);
 }
 ```
 
