@@ -10,7 +10,7 @@
   "license": "MIT",
   "version": "1.6.0",
   "public": true,
-  "main": "./dist/clearvox-realtime.umd.js",
+  "main": "./dist/clearvox-callcontrol.umd.js",
   "types": "./dist/types/index.d.ts",
   "dependencies": {
     "axios": "^0.18.0",
