@@ -8,7 +8,7 @@
     }
   ],
   "license": "MIT",
-  "version": "1.6.0",
+  "version": "0.0.2",
   "public": true,
   "main": "./dist/clearvox-callcontrol.umd.js",
   "types": "./dist/types/index.d.ts",
