@@ -143,6 +143,18 @@ callControl.dial('200', 'auto', true).then((channel) => {
 
 > **NOTE:** `phone` has the following possible values: the `{phoneID}`, `auto` or `flex`.
 
+##### callControl.groupCall(numbers[, phone[, autoAnswer]])
+```js
+callControl.groupCall(['200', '400'], 'auto', true).then((channel) => {
+    console.log(`channel started to ${channel.name} <${channel.number}>`, channel);
+});
+```
+> **NOTE:** Not every phone supports autoAnswer. You can use `callControl.getPhoneCapabilities()` to check.
+
+> **NOTE:** If you don't pass `phone` or `autoAnswer`, it will be based on the Call Control Settings.
+
+> **NOTE:** `phone` has the following possible values: the `{phoneID}`, `auto` or `flex`.
+
 ##### callControl.answer(channel[, phone])
 ```js
 callControl.answer(channel);
@@ -160,9 +172,15 @@ callControl.hangup(channel);
 
 ##### callControl.blindTransfer(callID, number[, channelToTransfer])
 ```javascript
-callControl.blindTransfer(channel.getCallID(), number);
+callControl.blindTransfer(channel.getCallID(), '200');
 ```
 > **NOTE:** `channelToTransfer` is only required when you have 2 or more active channels in the call, for example when you dial yourself.
+
+##### callControl.inviteToCall(callID, numbers)
+```javascript
+callControl.inviteToCall(channel.getCallID(), ['200']);
+```
+
 
 ##### callControl.bridge(callID, otherCallID[, channelToBridge[, otherChannelToBridge]])
 This will connect two calls. You need a channel in 2 calls for this and both your channels will end as the opposite channels are connected with each other.

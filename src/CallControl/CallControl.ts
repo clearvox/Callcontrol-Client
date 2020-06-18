@@ -15,6 +15,8 @@ import {BridgeAction} from "./Action/BridgeAction";
 import {GetPhoneCapabilitiesAction} from "./Action/GetPhoneCapabilitiesAction";
 import {PhoneCapabilities} from "./Phone/PhoneCapabilities";
 import {CallControlError} from "./Error/CallControlError";
+import {InviteToGroupCallAction} from "./Action/InviteToGroupCallAction";
+import {MakeGroupCallAction} from "./Action/MakeGroupCallAction";
 
 export class CallControl extends EventEmitter {
     private callsPromise: Promise<any[]> = Promise.resolve([]);
@@ -150,6 +152,22 @@ export class CallControl extends EventEmitter {
         });
     }
 
+    public groupCall(numbers: string[], phone?: string, autoAnswer?: boolean): Promise<Channel> {
+        return new Promise((resolve, reject) => {
+
+            const callReference = uuid();
+
+            this.sendAction(new MakeGroupCallAction(numbers, phone, autoAnswer, callReference));
+
+            setTimeout(() => {
+                this.removeListener('start:' + callReference, resolve);
+                reject(new Error('timeout'));
+            }, 2000);
+
+            this.once('start:' + callReference, resolve);
+        });
+    }
+
     public blindTransfer(callID: string, number: string, channelToTransfer?: Channel): void {
         const transfereePhoneID = channelToTransfer ? channelToTransfer.getPhoneID() : undefined;
 
@@ -171,6 +189,10 @@ export class CallControl extends EventEmitter {
             channelToBridge ? channelToBridge.getPhoneID() : undefined,
             otherChannelToBridge ? otherChannelToBridge.getPhoneID() : undefined,
         ));
+    }
+
+    public inviteToCall(channel: Channel, numbers: string[]): void {
+        this.sendAction(new InviteToGroupCallAction(channel.getCallID(), numbers));
     }
 
     public getPhoneCapabilities(phone: string): Promise<{ phoneID: string, capabilities: PhoneCapabilities }> {
