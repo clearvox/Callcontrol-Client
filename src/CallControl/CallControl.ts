@@ -135,11 +135,11 @@ export class CallControl extends EventEmitter {
         this.on('call:update', callback);
     }
 
-    public dial(number: string, phone?: string, autoAnswer?: boolean): Promise<Channel> {
+    public dial(number: string, phone?: string, autoAnswer?: boolean, otherTransferCallID?: string): Promise<Channel> {
         return new Promise((resolve, reject) => {
 
             const callReference = uuid();
-            this.sendAction(new MakeCallAction(number, phone, autoAnswer, callReference));
+            this.sendAction(new MakeCallAction(number, phone, autoAnswer, callReference, otherTransferCallID));
 
             setTimeout(() => {
                 this.removeListener('start:' + callReference, resolve);
