@@ -19,6 +19,7 @@ export class Channel extends EventEmitter {
     public origins: CallOrigin[] = [];
     public oldCallID: string;
     private callReference: string;
+    public participants: {}[] = undefined;
 
     constructor(private callID: string, private channelID: string, private phoneID: string) {
         super();
@@ -67,6 +68,7 @@ export class Channel extends EventEmitter {
         channel.duration = data.hasOwnProperty('duration') ? data.duration : channel.duration;
         channel.otherTransferCallID = data.hasOwnProperty('other_transfer_call_id') ? data.other_transfer_call_id : channel.otherTransferCallID;
         channel.isRecording = data.hasOwnProperty('is_recording') ? data.is_recording : channel.isRecording;
+        channel.participants = data.hasOwnProperty('participants') ? data.participants : channel.participants;
 
         if (data.hasOwnProperty('origin')) {
             channel.origins.push(CallOriginFactory.make(data.origin));
