@@ -161,7 +161,7 @@ export class CallControl extends EventEmitter {
     }
 
     public answer(channel: Channel, phone?: string): void {
-        this.sendAction(new AnswerAction(channel.getCallID(), phone ? phone : channel.getPhoneID()));
+        this.sendAction(new AnswerAction(channel.getCallID(), phone));
     }
 
     public bridge(callID: string, otherCallID: string, channelToBridge?: Channel, otherChannelToBridge?: Channel): void {
