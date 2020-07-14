@@ -112,8 +112,10 @@ export class CallControl extends EventEmitter {
         this.callsPromise = new Promise((resolve) => {
             this.sendAction(new GetCalls());
 
-            this.socketClient.once('calls', (data: any) => {
-                this.channels = data.map(Channel.make);
+            this.socketClient.once('calls', (data: any[]) => {
+                this.channels = data.map((channelData) => {
+                    return Channel.make(channelData);
+                });
 
                 resolve(this.channels);
                 return;
