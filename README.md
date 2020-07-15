@@ -131,7 +131,7 @@ callControl.onError((error) => {
 });
 ```
 
-##### callControl.dial(number[, phone[, autoAnswer]])
+##### callControl.dial(number[, phone[, autoAnswer[, otherTransferCallID]]])
 ```js
 callControl.dial('200', 'auto', true).then((channel) => {
     console.log(`channel started to ${channel.name} <${channel.number}>`, channel);
