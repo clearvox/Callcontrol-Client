@@ -114,8 +114,10 @@ export class CallControl extends EventEmitter {
         this.callsPromise = new Promise((resolve) => {
             this.sendAction(new GetCalls());
 
-            this.socketClient.once('calls', (data: any) => {
-                this.channels = data.map(Channel.make);
+            this.socketClient.once('calls', (data: any[]) => {
+                this.channels = data.map((channelData) => {
+                    return Channel.make(channelData);
+                });
 
                 resolve(this.channels);
                 return;
@@ -137,11 +139,11 @@ export class CallControl extends EventEmitter {
         this.on('call:update', callback);
     }
 
-    public dial(number: string, phone?: string, autoAnswer?: boolean): Promise<Channel> {
+    public dial(number: string, phone?: string, autoAnswer?: boolean, otherTransferCallID?: string): Promise<Channel> {
         return new Promise((resolve, reject) => {
 
             const callReference = uuid();
-            this.sendAction(new MakeCallAction(number, phone, autoAnswer, callReference));
+            this.sendAction(new MakeCallAction(number, phone, autoAnswer, callReference, otherTransferCallID));
 
             setTimeout(() => {
                 this.removeListener('start:' + callReference, resolve);
@@ -179,7 +181,7 @@ export class CallControl extends EventEmitter {
     }
 
     public answer(channel: Channel, phone?: string): void {
-        this.sendAction(new AnswerAction(channel.getCallID(), phone ? phone : channel.getPhoneID()));
+        this.sendAction(new AnswerAction(channel.getCallID(), phone));
     }
 
     public bridge(callID: string, otherCallID: string, channelToBridge?: Channel, otherChannelToBridge?: Channel): void {
