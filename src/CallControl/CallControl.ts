@@ -66,6 +66,12 @@ export class CallControl extends EventEmitter {
 
             this.emit('call:end', channel);
             channel.emit('end', channel);
+
+            channel.destroy();
+
+            this.channels = this.channels.filter((chan) => {
+                return chan.getChannelID() !== channel.getChannelID();
+            });
         });
 
         this.socketClient.on('call:error', (error) => {
