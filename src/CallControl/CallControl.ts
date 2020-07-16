@@ -82,6 +82,8 @@ export class CallControl extends EventEmitter {
             channels.forEach((channel: Channel) => {
                 channel.emit('error', callControlError);
             });
+
+            this.emit('error', callControlError);
         });
 
         return this.reloadChannels();
@@ -141,6 +143,10 @@ export class CallControl extends EventEmitter {
 
     public onChannelUpdate(callback: (channel: Channel) => any): void {
         this.on('call:update', callback);
+    }
+
+    public onError(callback: (error: CallControlError) => any): void {
+        this.on('error', callback);
     }
 
     public dial(number: string, phone?: string, autoAnswer?: boolean, otherTransferCallID?: string): Promise<Channel> {

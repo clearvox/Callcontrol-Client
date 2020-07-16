@@ -6,6 +6,10 @@ const url = 'https://192.168.1.1';
 const apiKey = '';
 
 CallControl.connect(url, apiKey).then((callControl) => {
+    callControl.onError((error) => {
+        console.log(error);
+    })
+
     callControl.onChannelStart((channel) => {
         console.log('channel started', channel);
 
