@@ -68,6 +68,12 @@ export class CallControl extends EventEmitter {
 
             this.emit('call:end', channel);
             channel.emit('end', channel);
+
+            channel.destroy();
+
+            this.channels = this.channels.filter((chan) => {
+                return chan.getChannelID() !== channel.getChannelID();
+            });
         });
 
         this.socketClient.on('call:error', (error) => {
@@ -78,6 +84,8 @@ export class CallControl extends EventEmitter {
             channels.forEach((channel: Channel) => {
                 channel.emit('error', callControlError);
             });
+
+            this.emit('error', callControlError);
         });
 
         return this.reloadChannels();
@@ -137,6 +145,10 @@ export class CallControl extends EventEmitter {
 
     public onChannelUpdate(callback: (channel: Channel) => any): void {
         this.on('call:update', callback);
+    }
+
+    public onError(callback: (error: CallControlError) => any): void {
+        this.on('error', callback);
     }
 
     public dial(number: string, phone?: string, autoAnswer?: boolean, otherTransferCallID?: string): Promise<Channel> {

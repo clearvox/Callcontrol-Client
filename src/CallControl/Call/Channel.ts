@@ -53,6 +53,10 @@ export class Channel extends EventEmitter {
         return this.callReference;
     }
 
+    destroy() {
+        this.removeAllListeners();
+    }
+
     static make(data: any, channel: Channel = null): Channel {
         if (!channel) {
             channel = new Channel(data.call_id, data.channel_id, data.phone_id);
