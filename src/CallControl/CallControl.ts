@@ -8,6 +8,7 @@ import {ModifyCallAction} from "./Action/ModifyCallAction";
 import {ClearvoxAPIClient} from "../Client/ClearvoxAPIClient";
 import {AnswerAction} from "./Action/AnswerAction";
 import {BlindTransferAction} from "./Action/BlindTransferAction";
+import {DtmfAction} from "./Action/DtmfAction";
 
 import * as uuid from "uuid/v4";
 import * as EventEmitter from "events";
@@ -207,6 +208,10 @@ export class CallControl extends EventEmitter {
 
     public inviteToCall(channel: Channel, numbers: string[]): void {
         this.sendAction(new InviteToGroupCallAction(channel.getCallID(), numbers));
+    }
+
+    public dtmf(channel: Channel, digit: string, phone?: string): void {
+        this.sendAction(new DtmfAction(channel.getCallID(), digit, phone));
     }
 
     public getPhoneCapabilities(phone: string): Promise<{ phoneID: string, capabilities: PhoneCapabilities }> {
