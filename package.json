@@ -24,7 +24,7 @@
     "@types/whatwg-url": "^6.4.0",
     "ts-loader": "^4.1.0",
     "typescript": "^3.3.3333",
-    "webpack": "4.8.3",
+    "webpack": "4.46.0",
     "webpack-cli": "2.1.4",
     "webpack-node-externals": "^1.6.0"
   },
